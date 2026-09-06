@@ -1,25 +1,68 @@
-# CounterCompose
+# Compose With MVVM
 
-Counter app like flutter app using kotlin and jetpack compose.
+App Android de exemplo que lista usuários da [JSONPlaceholder API](https://jsonplaceholder.typicode.com) com Jetpack Compose, seguindo o padrão funcional do [provider-mvvm-example](../../temp/provider-mvvm-example) e a arquitetura Kotlin do [Resonance](../../Resonance).
 
+## Stack
+
+| Tecnologia | Versão |
+|------------|--------|
+| Android Gradle Plugin | 9.4.0 |
+| Kotlin | 2.2.10 |
+| Compose BOM | 2026.02.01 |
+| Koin | 4.2.2 |
+| Navigation Compose | 2.9.3 |
+| Ktor Client | 3.1.3 |
+| DataStore | 1.1.7 |
+| compileSdk / targetSdk | 37 |
+| minSdk | 29 |
+| JVM | 21 |
+
+## Arquitetura
+
+MVVM por feature com Koin para injeção de dependências:
+
+```
+MainActivity → RoutesApp → UserRoute → UserViewModel → UserRepository → JSONPlaceholder
+                ↓                              ↓
+           SettingRoute                  ConnectionService + HttpService (Ktor)
+                ↓
+         SettingViewModel → SettingRepository → DataStore
+```
+
+### Estrutura de pacotes
+
+```
+src/
+├── common/
+│   ├── constants/       # ApiConstant, ValueConstant
+│   ├── patterns/        # StatePattern, ResultPattern
+│   └── services/        # HttpService, ConnectionService
+├── di/                  # Módulo Koin
+├── design/theme/        # Material 3
+├── routes/              # NavHost e rotas
+└── features/
+    ├── users/           # Lista e detalhe de usuários (API)
+    └── settings/        # Tema escuro persistido (DataStore)
+```
+
+## Funcionalidades
+
+- Lista de usuários com estados Initial, Loading, Success e Error
+- Pull-to-refresh e botão de atualização
+- Tela de detalhe com informações pessoais, endereço, contato e empresa
+- Configurações com tema escuro persistido via DataStore
+- Dialog About com nome, versão e copyright
+- Endpoint: `GET https://jsonplaceholder.typicode.com/users`
 
 ## Author
 
 William Franco (Dev mobile).
 
-
-## ScreenShots
-
-| Image 1 | Image 2 | Image 3 |
-|----------|----------|----------|
-| ![App Screenshot](assets/screenshots/screen-1.png) | ![App Screenshot](assets/screenshots/screen-2.png) | ![App Screenshot](assets/screenshots/screen-3.png) |
-
-
 ## License
 
 MIT License
 
-Copyright (c) 2023 William Franco
+Copyright (c) 2026 William Franco
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
