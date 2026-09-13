@@ -1,6 +1,21 @@
 # Compose With MVVM
 
-Sample Android app listing users from the [JSONPlaceholder API](https://jsonplaceholder.typicode.com) with Jetpack Compose and feature-based MVVM, Koin, and Ktor.
+Sample Android app that lists and details users from the [JSONPlaceholder API](https://jsonplaceholder.typicode.com) using Jetpack Compose and feature-based MVVM. Koin wires ViewModels, repositories, and Ktor-based `HttpService`; `ConnectionService` supports connectivity-aware behavior. Settings persist the dark theme with DataStore. UI loading states follow shared `StatePattern` and `ResultPattern` helpers in `common/patterns`.
+
+## Structure
+
+```mermaid
+flowchart TB
+  RoutesApp --> UserRoute
+  RoutesApp --> SettingRoute
+  UserRoute --> UserViewModel
+  UserViewModel --> UserRepository
+  UserRepository --> HttpService
+  HttpService --> JSONPlaceholder[JSONPlaceholder API]
+  SettingRoute --> SettingViewModel
+  SettingViewModel --> SettingRepository
+  SettingRepository --> DataStore
+```
 
 ## Stack
 
